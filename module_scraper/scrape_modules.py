@@ -13,7 +13,7 @@ modules = content["modules"]
 
 #%%
 module_urls = []
-for module in modules[:3]:
+for module in modules[:10]:
     module_urls.append(module["url"])
     
     folder = module["url"].split("/modules/")[1].split('/')[0]
@@ -49,7 +49,7 @@ class ModuleSpider(scrapy.Spider):
 
         rel_path = response.url.split("/modules/")[1].split('/')
         folder = rel_path[0]
-        filename = f"{rel_path[1]}.html"
+        filename = f"{rel_path[1]}.txt"
 
         with open(os.path.join("module_data", folder, filename), 'w') as f: f.write(str(page_text))
         # Path(os.path.join(folder, filename)).write_bytes(response.body)
@@ -65,3 +65,20 @@ process.start()
 process.stop()
 
 # %%
+for subdir, dirs, files in os.walk("module_data"):
+    print(subdir)
+    if subdir != "module_data":
+        files.sort(key=lambda x: x[0])
+        lessons = []
+        for filename in files:
+            print(filename)
+            with open(os.path.join(subdir, filename), 'r') as doc:
+                lessons.append(doc.read())
+
+        print(lessons)
+        with open(subdir+".txt", 'w') as out:
+            out.write(str(lessons))
+
+
+
+
