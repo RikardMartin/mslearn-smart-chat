@@ -6,6 +6,11 @@ import os
 import requests
 import json
 
+import numpy as np
+
+from dotenv import load_dotenv
+load_dotenv("/home/ricmartin/projekt/fhack/module_scraper/.env")
+
 #%%
 class ModuleSpider(scrapy.Spider):
     name = "mslearn_module"
@@ -68,6 +73,31 @@ process.start()
 #%%
 process.stop()
 
+#%%
+from openai import AzureOpenAI
+from openai.types import CreateEmbeddingResponse, Embedding
+
+key = os.getenv("OPENAI_API_KEY")
+base = os.getenv("OPENAI_API_BASE")
+client = AzureOpenAI(api_version="2023-07-01-preview", azure_endpoint=base, api_key=key)
+
+#%%
+embedding_model = "text-embedding-model"
+
+def get_embedding(text):
+
+    result = client.embeddings.create(
+      model=embedding_model,
+      input=text
+    )
+    # result = np.array(result["data"][0]["embedding"])
+    result = result.data[0].embedding
+    return result
+
+get_embedding("hej san på dejsan")
+
+#%%
+
 folders = os.listdir("module_data")
 folders = [file for file in folders if not '.' in file]
 for folder in folders:
@@ -85,11 +115,16 @@ for folder in folders:
 
     with open(os.path.join(path, "metadata.json"), 'r') as metadata:
         data = json.load(metadata)
+
         data["content"] = str(lessons)
-        os.remove(metadata.name)
+        data["content_vector"] = get_embedding(data["content"])
         
         with open(path+".json", 'w') as outfile:
             json.dump(data, outfile)
 
-    os.removedirs(path)
+        # os.remove(metadata.name)
+    # os.removedirs(path)
 # %%
+
+
+

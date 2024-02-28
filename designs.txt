@@ -1,0 +1,16 @@
+module
+|
+|____part 1
+|____part 2
+|____ ...
+
+
+part.json = {
+	module_metadata_1,
+	module_metadata_2,
+	...
+	part_title,
+	part_content,
+	part_content_vector
+}
+
