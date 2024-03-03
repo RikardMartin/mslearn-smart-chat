@@ -49,9 +49,7 @@ class ModuleSpider(scrapy.Spider):
 
 
 #%%
-response = requests.get("https://learn.microsoft.com/api/catalog/?locale=en-en&type=modules")
-content = response.json()
-modules = content["modules"]
+
 
 #%%
 module_urls = []
@@ -75,7 +73,7 @@ process.stop()
 
 #%%
 from openai import AzureOpenAI
-from openai.types import CreateEmbeddingResponse, Embedding
+# from openai.types import CreateEmbeddingResponse, Embedding
 
 key = os.getenv("OPENAI_API_KEY")
 base = os.getenv("OPENAI_API_BASE")
