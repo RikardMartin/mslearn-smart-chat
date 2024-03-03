@@ -1,6 +1,6 @@
 ## Ask MSlearn
 This is the repo for our contribution to the Microsoft Fabric community AI hack competition.
-The authors are Richard Martin and Mårten Sjö.
+The authors are Richard Martin and Mårten Sjö (GH: mrmarten).
 > The solution presented here has not been exposed to the full mslearn dataset due to time and cost constraints for processing data.
 
 ## Selling pitch
