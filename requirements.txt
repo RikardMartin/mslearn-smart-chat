@@ -1,4 +1,10 @@
-scrapy
 requests
 os
+dotenv
 json
+openai==1.1
+scrapy
+base64
+azure-identity
+azure-search
+azure-search-documents
